@@ -20,7 +20,7 @@ const withBeaconsAndroid: ConfigPlugin<BeaconsPluginProps> = (config, props = {}
   return withAndroidManifest(config, (config) => {
     const androidManifest = config.modResults;
 
-    // Add permissions
+    // Add location permissions
     AndroidConfig.Permissions.addPermission(
       androidManifest,
       'android.permission.ACCESS_COARSE_LOCATION'
@@ -29,6 +29,8 @@ const withBeaconsAndroid: ConfigPlugin<BeaconsPluginProps> = (config, props = {}
       androidManifest,
       'android.permission.ACCESS_FINE_LOCATION'
     );
+    
+    // Add legacy Bluetooth permissions
     AndroidConfig.Permissions.addPermission(
       androidManifest,
       'android.permission.BLUETOOTH'
@@ -37,6 +39,8 @@ const withBeaconsAndroid: ConfigPlugin<BeaconsPluginProps> = (config, props = {}
       androidManifest,
       'android.permission.BLUETOOTH_ADMIN'
     );
+    
+    // Add modern Bluetooth permissions (API 31+)
     AndroidConfig.Permissions.addPermission(
       androidManifest,
       'android.permission.BLUETOOTH_SCAN'
@@ -44,6 +48,10 @@ const withBeaconsAndroid: ConfigPlugin<BeaconsPluginProps> = (config, props = {}
     AndroidConfig.Permissions.addPermission(
       androidManifest,
       'android.permission.BLUETOOTH_ADVERTISE'
+    );
+    AndroidConfig.Permissions.addPermission(
+      androidManifest,
+      'android.permission.BLUETOOTH_CONNECT'
     );
 
     // Add uses-feature for Bluetooth LE
@@ -92,10 +100,10 @@ const withBeaconsIOS: ConfigPlugin<BeaconsPluginProps> = (config, props = {}) =>
     }
 
     const backgroundModes = config.modResults.UIBackgroundModes;
-    if (!backgroundModes.includes('location')) {
+    if (backgroundModes.indexOf('location') === -1) {
       backgroundModes.push('location');
     }
-    if (!backgroundModes.includes('bluetooth-central')) {
+    if (backgroundModes.indexOf('bluetooth-central') === -1) {
       backgroundModes.push('bluetooth-central');
     }
 
