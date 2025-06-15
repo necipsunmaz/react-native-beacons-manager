@@ -1,5 +1,3 @@
-// flow
-
 import { Platform } from 'react-native';
 
 const RNiBeaconsModule = Platform.select({

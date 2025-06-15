@@ -1,7 +1,7 @@
 {
   "name": "react-native-beacons-manager",
-  "version": "1.1.0",
-  "description": "React-Native library for detecting beacons (iOS and Android)",
+  "version": "1.2.0",
+  "description": "React-Native library for detecting beacons (iOS and Android) - Expo compatible",
   "keywords": [
     "react-native",
     "react-component",
@@ -14,7 +14,8 @@
     "altbeacon",
     "estimote",
     "eddystone",
-    "altbeacons"
+    "altbeacons",
+    "expo"
   ],
   "repository": {
     "type": "git",
@@ -29,37 +30,34 @@
   },
   "homepage": "https://github.com/MacKentoch/react-native-beacons-manager#readme",
   "main": "index.js",
+  "expo": {
+    "plugin": "./expo-plugin/build/index.js"
+  },
   "directories": {
     "example": "examples",
     "lib": "lib"
   },
   "engines": {
-    "node": ">=8.9.0",
-    "npm": ">=5.3.0",
-    "yarn": ">=1.5.1"
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0",
+    "yarn": ">=1.22.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "flow": "node_modules/.bin/flow",
-    "flow-typed": "node_modules/.bin/flow-typed"
+    "build-plugin": "cd expo-plugin && npm run build",
+    "prepare": "npm run build-plugin"
   },
   "author": "Erwan DATIN (http://www.erwan-datin.com)",
   "license": "MIT",
   "nativePackage": true,
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-eslint": "^7.2.3",
-    "eslint": "^4.4.1",
-    "eslint-plugin-flowtype": "^2.35.0",
-    "eslint-plugin-react": "^7.2.0",
-    "eslint-plugin-react-native": "^3.0.1",
-    "flow-bin": "^0.85.0",
-    "prop-types": "^15.5.10",
-    "react": "^15.4.2",
-    "react-native": "^0.61.5"
+    "@types/react": "^19.0.0",
+    "@types/react-native": "^0.72.0",
+    "typescript": "^5.0.0"
   },
   "peerDependencies": {
-    "react": ">=15.4.2",
-    "react-native": ">=0.41.2"
+    "react": ">=18.0.0",
+    "react-native": ">=0.70.0",
+    "expo": ">=49.0.0"
   }
 }

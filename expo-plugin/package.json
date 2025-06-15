@@ -1,0 +1,21 @@
+{
+  "name": "react-native-beacons-manager-expo-plugin",
+  "version": "1.2.0",
+  "description": "Expo config plugin for react-native-beacons-manager",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf build"
+  },
+  "keywords": ["expo", "plugin", "beacons", "ibeacon"],
+  "author": "Erwan DATIN",
+  "license": "MIT",
+  "devDependencies": {
+    "@expo/config-plugins": "^8.0.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "@expo/config-plugins": "^8.0.0"
+  }
+}

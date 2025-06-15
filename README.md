@@ -9,7 +9,16 @@
 
 `react-native-beacons-manager`: add beacon technology in your React Native application for both iOS and Android.
 
+**🎉 Now with Expo support! 🎉**
+
+## Expo Integration
+
+For Expo users, please see the [Expo Integration Guide](./EXPO_INTEGRATION.md) for complete setup instructions.
+
+## About
+
 This repository is born to keep alive and up to date these 3 original awesome:
+
 - [ibeacon for android](https://github.com/mmazzarolo/react-native-beacons-android)
 - [ibeacon for iOS](https://github.com/frostney/react-native-ibeacon)
 - [eddyStone for iOS](https://github.com/google/eddystone/blob/master/tools/ios-eddystone-scanner-sample)
@@ -27,37 +36,42 @@ If you want to test with a `simulated beacon`, there is a useful free applicatio
 **Mobile Version compatibility:**
 
 > - **iOS** `minimum version`
->   -  8.0
+>   - 8.0
 > - **Android** `minimum version`
 >   - 21 (*alias LOLLIPOP*)
 
-
 ### 1. get modules
+
 *via npm:*
+
 ```javascript:
 npm install react-native-beacons-manager
 ```
+
 *or via yarn:*
+
 ```javascript:
 yarn add react-native-beacons-manager
 ```
+
 ### 2. link to your application
 
 ```javascript
 react-native link react-native-beacons-manager
 ```
+
 ### 3.a configuration specific to iOS
 
 If you plan to:
+
 - `only range beacons` no configuration needed (`react-native init` already did the job for you), or just check that you already have `WhenInUse` authorization declared in your `info.plist`:
   - ![ios: request when in use authorization](./images/plistRequireWhenInUseAutorization.png)
-
 
 - `monitor` then default authorization won't be enough:
   - in your `info.plist`, add `Privacy - Location Always Usage Description` key defined (*empty value or not. It is better to define a value to a custom / more user-friendly message*).
   ![ios: request when in use authorization](./images/plistRequireAlwaysUseAutorization.png)
 
--  If your `Info.plist` contains a `NSBluetoothPeripheralUsageDescription` key, you have to specify an associated text to avoid being rejected.
+- If your `Info.plist` contains a `NSBluetoothPeripheralUsageDescription` key, you have to specify an associated text to avoid being rejected.
 
 - **use background mode** check [this documentation](./BACKGROUND_MODES.md)
 
@@ -66,6 +80,7 @@ If you plan to:
 Nothing (lucky Android :smile:).
 
 Just don't forget to activate
+
 - Bluetooth service (*all android version*)
 - Location service (*android < 7: beacon detection won't work on android 6 if location service is off*)
 
@@ -134,6 +149,7 @@ const subscription = DeviceEventEmitter.addListener(
 | **shouldDropEmptyRanges**         | Call this method to stop sending the `beaconsDidRange` event when the beacon list is empty. This can be useful when listening to multiple beacon regions and can reduce cpu usage by 1-1.5%.                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 
                                                                                                                                                                                                                              |
+
 | Event                            | Description                                                                                                                                                                                                                                                                                                                                     |
 |:---------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **authorizationStatusDidChange** | This event will be called when authorization changed for receiving data location. PLEASE NOTE: starting a location service will not provide data location until authorization is given by the user ("authorizedAlways" or "authorizedWhenInUse").                                                                                               |
@@ -142,7 +158,6 @@ const subscription = DeviceEventEmitter.addListener(
 | **regionDidExit**                | In the same `regionDidEnter` is called if the device entered a region, `regionDidExit` will be called if the device exited a region and we can't get any signal from any of the beacons inside the region. As for the payload, we get a property called `region` that represents the `region` identifier and is a string as well as the `uuid`. |
 | **didDetermineState**            | If there is a boundary transition for a region, `didDetermineState` is being called. Inside the callback the parameter we can use returns an object with a property `region` that contains the `region` identifier value as a string. Additionally, we get the UUID of the region through its `uuid` property.                                  |
 | **authorizationDidChange**       | When the user permissions change, for example the user allows to always use beacons, this event will be called. The same applies when the user revokes the permission to use beacons. The payload is a string which can either be: `"authorizedAlways"`, `"authorizedWhenInUse"`, `"denied"`, `"notDetermined"` or `"restricted"`               |
-
 
 ### 4.b Android
 
@@ -186,14 +201,14 @@ DeviceEventEmitter.addListener('beaconsDidRange', (data) => {
 | **getMonitoredRegions(): promise**                                                                | Returns a promise that resolves in an array with the regions being monitored.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | **startMonitoringForRegion({identifier: string, uuid: string, minor: int, major: int}): promise** | Starts monitoring for beacons. The parameter `identifier` must be an unique ID. The parameter `uuid` is optional, it allows you to detect only the beacons with a specific UUID (if `null` every beacon will be detected). The parameters `minor` and `major` are optional, they allow you to monitor only the region of a specific beacon.                                                                                                                                                                                                                                        |
 | **startRangingBeaconsInRegion(regionId: string, beaconsUUID: string): promise**                   | Starts range scan for beacons. The parameter `regionId` must be an unique ID. The parameter `beaconsUUID` is optional, it allows you to detect only the beacons with a specific UUID (if `null` every beacon will be detected).                                                                                                                                                                                                                                                                                                                                                    |
-| **startRangingBeaconsInRegion({identifier: string, uuid: string}): promise**                      | Starts range scan for beacons. The parameter `identifier` must be an unique ID. The parameter `uuid` is optional, it allows you to detect only the beacons with a specific UUID (if `null` every beacon will be detected). Prefer the use of this method over `startRangingBeaconsInRegion(regionId: string, beaconsUUID: string)`, as this method signature more closely matches the signature for the equivalent iOS method. `PLEASE NOTE: ` to listen `EddyStone` beacons on iOS, you have to pass an identifier as: `EDDY_STONE_REGION_ID`, (example: `Beacons.startRangingBeaconsInRegion({identifier: 'EDDY_STONE_REGION_ID', ...restOptions})`).                                                                                                                                                      |
+| **startRangingBeaconsInRegion({identifier: string, uuid: string}): promise**                      | Starts range scan for beacons. The parameter `identifier` must be an unique ID. The parameter `uuid` is optional, it allows you to detect only the beacons with a specific UUID (if `null` every beacon will be detected). Prefer the use of this method over `startRangingBeaconsInRegion(regionId: string, beaconsUUID: string)`, as this method signature more closely matches the signature for the equivalent iOS method. `PLEASE NOTE:` to listen `EddyStone` beacons on iOS, you have to pass an identifier as: `EDDY_STONE_REGION_ID`, (example: `Beacons.startRangingBeaconsInRegion({identifier: 'EDDY_STONE_REGION_ID', ...restOptions})`).                                                                                                                                                      |
 | **stopMonitoringForRegion({identifier: string, uuid: string, minor: int, major: int}): promise**  | Stops the monitoring for beacons.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | **stopRangingBeaconsInRegion(regionId: string, beaconsUUID: string): promise**                    | Stops the range scan for beacons.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | **stopRangingBeaconsInRegion({identifier: string, uuid: string}): promise**                       | Stops the range scan for beacons. Prefer the use of this method over `stopRangingBeaconsInRegion(regionId: string, beaconsUUID: string)`, as this method signature more closely matches the signature for the equivalent iOS method.                                                                                                                                                                                                                                                                                                                                               |
 | **requestStateForRegion({identifier: string, uuid: string, minor: int, major: int}): void**       | Retrieves the state of a region asynchronously. The parameter `identifier` must be an unique ID. The parameter `uuid` is optional, it allows you to detect only the beacons with a specific UUID (if `null` every beacon will be detected). The parameters `minor` and `major` are optional, they allow you to monitor only the region of a specific beacon.                                                                                                                                                                                                                       |
 
+## TODO
 
-## TODO:
 **Standardization of iOS and android to make library more coherent:**
 
 - **iOS**
@@ -209,14 +224,12 @@ DeviceEventEmitter.addListener('beaconsDidRange', (data) => {
 - **android**
   - [ ] add support to Eddystone
 
-
 ## Donate
 
 Do you use & like react-native-beacons-manager but you don’t find a way to show some love?
 If yes, please consider donating to support this project. Otherwise, no worries, regardless of whether there is support or not, I will keep maintaining this project. Still, if you buy me a cup of coffee I would be more than happy though 😄
 
 [![Support via PayPal](./images/paypal/Paypal-button.png)](https://www.paypal.me/ErwanDatin/)
-
 
 ## license
 
@@ -241,6 +254,5 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FMacKentoch%2Freact-native-beacons-manager.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FMacKentoch%2Freact-native-beacons-manager?ref=badge_large)
