@@ -101,10 +101,18 @@ repositories {
     }
 }
 
+configurations.all {
+    resolutionStrategy {
+        force 'org.jetbrains:annotations:23.0.0'
+        exclude group: 'com.intellij', module: 'annotations'
+    }
+}
 
 dependencies {
     //noinspection GradleDynamicVersion
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.facebook.react:react-native:+'
-    implementation 'org.altbeacon:android-beacon-library:2.20.4'
+    implementation('org.altbeacon:android-beacon-library:2.19.6') {
+        exclude group: 'com.intellij', module: 'annotations'
+    }
 }
