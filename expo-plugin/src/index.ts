@@ -29,7 +29,7 @@ const withBeaconsAndroid: ConfigPlugin<BeaconsPluginProps> = (config, props = {}
       androidManifest,
       'android.permission.ACCESS_FINE_LOCATION'
     );
-    
+
     // Add legacy Bluetooth permissions
     AndroidConfig.Permissions.addPermission(
       androidManifest,
@@ -39,7 +39,7 @@ const withBeaconsAndroid: ConfigPlugin<BeaconsPluginProps> = (config, props = {}
       androidManifest,
       'android.permission.BLUETOOTH_ADMIN'
     );
-    
+
     // Add modern Bluetooth permissions (API 31+)
     AndroidConfig.Permissions.addPermission(
       androidManifest,
@@ -60,7 +60,7 @@ const withBeaconsAndroid: ConfigPlugin<BeaconsPluginProps> = (config, props = {}
     }
 
     const hasBluetoothLE = androidManifest.manifest['uses-feature'].some(
-      (feature: any) => 
+      (feature) =>
         feature.$?.['android:name'] === 'android.hardware.bluetooth_le'
     );
 
@@ -77,7 +77,7 @@ const withBeaconsAndroid: ConfigPlugin<BeaconsPluginProps> = (config, props = {}
   });
 };
 
-const withBeaconsIOS: ConfigPlugin<BeaconsPluginProps> = (config, props = {}) => {
+const withBeaconsIOS: ConfigPlugin<BeaconsPluginProps> = (config, props: BeaconsPluginProps = {}) => {
   return withInfoPlist(config, (config) => {
     const {
       locationAlwaysAndWhenInUsePermission = 'This app uses location services to detect beacons in the background.',
@@ -90,7 +90,7 @@ const withBeaconsIOS: ConfigPlugin<BeaconsPluginProps> = (config, props = {}) =>
     config.modResults.NSLocationAlwaysAndWhenInUseUsageDescription = locationAlwaysAndWhenInUsePermission;
     config.modResults.NSLocationAlwaysUsageDescription = locationAlwaysPermission;
     config.modResults.NSLocationWhenInUseUsageDescription = locationWhenInUsePermission;
-    
+
     // Add Bluetooth permission
     config.modResults.NSBluetoothAlwaysUsageDescription = bluetoothAlwaysPermission;
 
@@ -111,7 +111,7 @@ const withBeaconsIOS: ConfigPlugin<BeaconsPluginProps> = (config, props = {}) =>
   });
 };
 
-const withBeacons: ConfigPlugin<BeaconsPluginProps> = (config, props = {}) => {
+const withBeacons: ConfigPlugin<BeaconsPluginProps> = (config, props: BeaconsPluginProps = {}) => {
   config = withBeaconsAndroid(config, props);
   config = withBeaconsIOS(config, props);
   return config;
