@@ -1,7 +1,6 @@
 import {
   AndroidConfig,
   ConfigPlugin,
-  IOSConfig,
   createRunOncePlugin,
   withAndroidManifest,
   withInfoPlist,
