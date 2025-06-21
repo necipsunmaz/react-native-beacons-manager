@@ -1,7 +1,6 @@
 import {
   AndroidConfig,
   ConfigPlugin,
-  IOSConfig,
   createRunOncePlugin,
   withAndroidManifest,
   withInfoPlist,
@@ -9,7 +8,7 @@ import {
 
 const pkg = { name: 'react-native-beacons-manager', version: '1.2.0' };
 
-interface BeaconsPluginProps {
+type BeaconsPluginProps = {
   locationAlwaysAndWhenInUsePermission?: string;
   locationAlwaysPermission?: string;
   locationWhenInUsePermission?: string;
@@ -29,7 +28,7 @@ const withBeaconsAndroid: ConfigPlugin<BeaconsPluginProps> = (config, props = {}
       androidManifest,
       'android.permission.ACCESS_FINE_LOCATION'
     );
-    
+
     // Add legacy Bluetooth permissions
     AndroidConfig.Permissions.addPermission(
       androidManifest,
@@ -39,7 +38,7 @@ const withBeaconsAndroid: ConfigPlugin<BeaconsPluginProps> = (config, props = {}
       androidManifest,
       'android.permission.BLUETOOTH_ADMIN'
     );
-    
+
     // Add modern Bluetooth permissions (API 31+)
     AndroidConfig.Permissions.addPermission(
       androidManifest,
@@ -60,7 +59,7 @@ const withBeaconsAndroid: ConfigPlugin<BeaconsPluginProps> = (config, props = {}
     }
 
     const hasBluetoothLE = androidManifest.manifest['uses-feature'].some(
-      (feature: any) => 
+      (feature) =>
         feature.$?.['android:name'] === 'android.hardware.bluetooth_le'
     );
 
@@ -90,7 +89,7 @@ const withBeaconsIOS: ConfigPlugin<BeaconsPluginProps> = (config, props = {}) =>
     config.modResults.NSLocationAlwaysAndWhenInUseUsageDescription = locationAlwaysAndWhenInUsePermission;
     config.modResults.NSLocationAlwaysUsageDescription = locationAlwaysPermission;
     config.modResults.NSLocationWhenInUseUsageDescription = locationWhenInUsePermission;
-    
+
     // Add Bluetooth permission
     config.modResults.NSBluetoothAlwaysUsageDescription = bluetoothAlwaysPermission;
 
