@@ -8,7 +8,7 @@ import {
 
 const pkg = { name: 'react-native-beacons-manager', version: '1.2.0' };
 
-interface BeaconsPluginProps {
+type BeaconsPluginProps = {
   locationAlwaysAndWhenInUsePermission?: string;
   locationAlwaysPermission?: string;
   locationWhenInUsePermission?: string;
@@ -76,7 +76,7 @@ const withBeaconsAndroid: ConfigPlugin<BeaconsPluginProps> = (config, props = {}
   });
 };
 
-const withBeaconsIOS: ConfigPlugin<BeaconsPluginProps> = (config, props: BeaconsPluginProps = {}) => {
+const withBeaconsIOS: ConfigPlugin<BeaconsPluginProps> = (config, props = {}) => {
   return withInfoPlist(config, (config) => {
     const {
       locationAlwaysAndWhenInUsePermission = 'This app uses location services to detect beacons in the background.',
@@ -110,7 +110,7 @@ const withBeaconsIOS: ConfigPlugin<BeaconsPluginProps> = (config, props: Beacons
   });
 };
 
-const withBeacons: ConfigPlugin<BeaconsPluginProps> = (config, props: BeaconsPluginProps = {}) => {
+const withBeacons: ConfigPlugin<BeaconsPluginProps> = (config, props = {}) => {
   config = withBeaconsAndroid(config, props);
   config = withBeaconsIOS(config, props);
   return config;
