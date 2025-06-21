@@ -8,7 +8,7 @@ import {
 
 const pkg = { name: 'react-native-beacons-manager', version: '1.2.0' };
 
-interface BeaconsPluginProps {
+type BeaconsPluginProps = {
   locationAlwaysAndWhenInUsePermission?: string;
   locationAlwaysPermission?: string;
   locationWhenInUsePermission?: string;
